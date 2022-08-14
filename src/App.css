@@ -22,7 +22,7 @@
   font-size: calc(10px + 2vmin);
   background: black;
   color: aqua;
-
+  height: 150px;
   border: white;
   border-style: ridge;
 }
@@ -70,4 +70,12 @@
 
 .custom-btn-toolbar>.btn {
   margin-right: 1rem;
+}
+
+.form-group {
+  width: 90%;
+}
+
+h2 {
+  color: red;
 }

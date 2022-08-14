@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
-import { Button, ButtonToolbar } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
+import Accordion from 'react-bootstrap/Accordion';
+
 
 // ReactComponent
 //     - props => 부모로부터 주입받는 값
@@ -52,37 +54,43 @@ const MyNumberHistory = () => {
     function endHandleChange(e) {
         setEnd(e.target.value);
     }
+
     return (
         <Container>
             {/* <Container className='bg-light rounded-5'>회차정보</Container> */}
             <Container className='p-5 mb-4 bg-light rounded-3'>
-                <Form onSubmit={NumberSubmit}>
+                <Form onSubmit={NumberSubmit} >
                     <Form.Group className="mb-3" controlId="start">
-                        <Form.Label>시작회차번호</Form.Label>
-                        <Form.Control type="input" placeholder="start round" value={start} onChange={startHandleChange} />
+                        <Form.Label>조회번호(시작)</Form.Label>
+                        <Form.Control type="input" placeholder="start round" className="w-50 form-group" size="sm" value={start} onChange={startHandleChange} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="end" >
-                        <Form.Label>종료회차번호</Form.Label>
-                        <Form.Control type="input" placeholder="start round" value={end} onChange={endHandleChange} />
+                        <Form.Label>조회번호(마지막)</Form.Label>
+                        <Form.Control type="input" placeholder="end round" className="w-50 form-group" size="sm" value={end} onChange={endHandleChange} />
                     </Form.Group>
                     <Button variant="primary" type="submit" >조회</Button>
                 </Form>
+                <Accordion defaultActiveKey="0" flush>
+                    <Accordion.Item eventKey="0">
+                        <Accordion.Header>조회결과</Accordion.Header>
+                        <Accordion.Body>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        {headerMeta.map(i => <th key={`num_header_${i}`}>{i}</th>)}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {results.filter(s => s !== null).map((d, idx) => {
+                                        return (<TableRow key={`num_table_${idx}`} data={d} />)
+                                    })}
+                                </tbody>
+                            </Table>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
             </Container>
-            <Container>
-                <Table>
-                    <thead>
-                        <tr>
-                            {headerMeta.map(i => <th key={`num_header_${i}`}>{i}</th>)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {results.filter(s => s !== null).map((d, idx) => {
-                            return (<TableRow key={`num_table_${idx}`} data={d} />)
-                        })}
-                    </tbody>
-                </Table>
 
-            </Container>
         </Container>
     );
 }
