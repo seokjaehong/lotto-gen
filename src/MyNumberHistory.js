@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-
+import Container from "react-bootstrap/Container";
+import { Button, ButtonToolbar } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import Table from 'react-bootstrap/Table';
 
 // ReactComponent
 //     - props => 부모로부터 주입받는 값
@@ -50,32 +53,37 @@ const MyNumberHistory = () => {
         setEnd(e.target.value);
     }
     return (
-        <div>
-            <div className='filter'>
-                <div className='filter-header'>회차정보</div>
-                <form onSubmit={NumberSubmit}>
-                    <input type="text" name="start" placeholder="시작회차" value={start} onChange={startHandleChange} />
-                    <input type="text" name="end" placeholder="종료회차" value={end} onChange={endHandleChange} />
-                    <button type="submit">조회</button>
-                </form>
-            </div>
-            <div className="number-history">
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                {headerMeta.map(i => <th key={`num_header_${i}`}>{i}</th>)}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {results.filter(s => s !== null).map((d, idx) => {
-                                return (<TableRow key={`num_table_${idx}`} data={d} />)
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <Container>
+            {/* <Container className='bg-light rounded-5'>회차정보</Container> */}
+            <Container className='p-5 mb-4 bg-light rounded-3'>
+                <Form onSubmit={NumberSubmit}>
+                    <Form.Group className="mb-3" controlId="start">
+                        <Form.Label>시작회차번호</Form.Label>
+                        <Form.Control type="input" placeholder="start round" value={start} onChange={startHandleChange} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="end" >
+                        <Form.Label>종료회차번호</Form.Label>
+                        <Form.Control type="input" placeholder="start round" value={end} onChange={endHandleChange} />
+                    </Form.Group>
+                    <Button variant="primary" type="submit" >조회</Button>
+                </Form>
+            </Container>
+            <Container>
+                <Table>
+                    <thead>
+                        <tr>
+                            {headerMeta.map(i => <th key={`num_header_${i}`}>{i}</th>)}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {results.filter(s => s !== null).map((d, idx) => {
+                            return (<TableRow key={`num_table_${idx}`} data={d} />)
+                        })}
+                    </tbody>
+                </Table>
+
+            </Container>
+        </Container>
     );
 }
 
